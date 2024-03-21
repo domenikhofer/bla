@@ -42,8 +42,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //get children
-
         return view('category.show', ['category' => $category]);
     }
 
@@ -70,8 +68,9 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('category.index');
     }
 }
