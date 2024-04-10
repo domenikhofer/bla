@@ -8,6 +8,7 @@
     <title>BLA - BetterListApp</title>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <script src="{{ asset('script.js') }}" defer></script>
+
 </head>
 
 <body>

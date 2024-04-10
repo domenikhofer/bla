@@ -1,4 +1,4 @@
-<div class="category">
+<div class="category is-idle js-item">
     <div class="categoryWrapper">
         <div class="left">
             @if (count($category->children) > 0)
@@ -15,6 +15,7 @@
                 @method('DELETE')
                 <button type="submit">Delete</button>
             </form>
+            <div class="drag-handle js-drag-handle"></div>
         </div>
     </div>
 
@@ -23,8 +24,10 @@
         @php
             $counter++;
         @endphp
+        <div class="categories">
         @foreach ($category->children as $child)
             @include('components.category', ['category' => $child, 'counter' => $counter])
         @endforeach
+    </div>
     @endif
 </div>
