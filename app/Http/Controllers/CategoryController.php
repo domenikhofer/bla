@@ -16,6 +16,12 @@ class CategoryController extends Controller
         return view('category.index', ['categories' => $categories]);
     }
 
+    public function reorder()
+    {
+        $categories = Category::where('parent_id', null)->get();
+        return view('category.reorder', ['categories' => $categories]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
