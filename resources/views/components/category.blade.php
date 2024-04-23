@@ -5,7 +5,7 @@
         @else
             <a href="{{ route('category.show', ['category' => $category->id]) }}">
                 <span class="emoji"><span class="icon">{{ $category->emoji }}</span></span>
-                <span class="title">{{ $category->name }}</span>
+                <span class="title"><span class="titleContent">{{ $category->name }}</span></span>
             </a>
         @endif
     </div>

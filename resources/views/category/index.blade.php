@@ -11,9 +11,12 @@
 <div class="plantTop">
     <img src="images/plantTop.png" alt="">
 </div>
-<div class="plantBottom">
-    <img src="images/plantBottom.png" alt="">
+<div class="plantBottomWrapper">
+    <div class="plantBottom">
+        <img src="images/plantBottom.png" alt="">
+    </div>
 </div>
+
 <div class="pageActions">
     <a class="button" href="{{ route('category.reorder') }}">✏️</a>
 </div>

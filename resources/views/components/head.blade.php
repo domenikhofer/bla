@@ -15,4 +15,4 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container {{ explode('.', request()->route()->getName())[1] . 'Page' }}">
