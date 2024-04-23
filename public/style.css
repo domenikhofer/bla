@@ -6,22 +6,23 @@
 
 body {
     height: 100%;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-weight: 400;
-
-    background: #87a5b2;
-
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    background: #87a5b2;
+    background-image: linear-gradient(#fdfeff, #ddedfe);
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
+    overflow-x: hidden;
+    position: relative;
 }
 
 a,
@@ -33,12 +34,11 @@ button {
 button,
 .button {
     background: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: #001d29;
-    font-weight: 500;
-    font-size: 18px;
-    box-shadow: 0 4px 6px 6px #001d2910, 0 2px 4px 2px #001d2910;
+    color: #0e1633;
+    border-radius: 50%;
+    padding: 9px;
+    font-size: 15px;
+    box-shadow: 0 2px 3px 3px #0e163310, 0 1px 2px 1px #0e163310;
 }
 
 button:hover,
@@ -46,117 +46,223 @@ button:hover,
     background-color: #f0f0f0;
 }
 
-.categoriesWrapper{
-    margin-bottom: 50px;
+.categoriesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: calc(100% + 20px);
+
 }
 
 .categories {
-    display: flex;
-    flex-direction: column;
     gap: 10px 0;
+}
+
+.subcategories {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.subcategories .category {
+    border-radius: 5px;
+    color: #0e1633;
+    text-align: center;
+    width: 100%;
+
 }
 
 .category {
     width: 100%;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: #001d29;
-    font-weight: 500;
-    font-size: 18px;
-    box-shadow: 0 4px 6px 6px #001d2910, 0 2px 4px 2px #001d2910;
     will-change: transform;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% + 20px);
+
 }
 
-.category.is-idle .drag-handle {
-    cursor: grab;
-}
-
-.category.is-idle {
-    /* transition: 0.25s ease transform; */
-}
-
-.category.is-draggable,
-.category.is-draggable .drag-handle {
-    cursor: grabbing;
-}
-
-.category.is-draggable {
-    z-index: 10;
+.category.categoriesTitle {
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .categoryWrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    border-radius: 5px;
+    color: #0e1633;
+    font-weight: 500;
+    font-size: 18px;
 }
 
-.category .left {
+.subcategoriesWrapper{
+    display: flex;
+position: relative;
+}
+
+.subcategories .category .content {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
 
 }
 
-.category .toggle {
+.subcategories .category .content img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     margin-right: 10px;
-    cursor: pointer;
+    object-fit: cover;
+    object-position: center;
+
 }
 
-.category>.categoryWrapper .toggle::after {
-    content: '+';
-}
-
-.category.open>.categoryWrapper .toggle::after {
-    content: '-';
-}
-
-.category>.categories {
-    display: none;
-}
-
-.category.open>.categories {
+.subcategories .category .content a {
+    height: 100%;
     display: flex;
-gap: 5px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+    filter: drop-shadow(0 4px 6px #0e163305) drop-shadow(0 2px 4px #0e163305) drop-shadow(1px 1px 1px #ddedfe);
 }
 
-.category.open>.categories .category{
-    margin-top: 5px;
-
+.subcategories .category .content span {
+    display: block;
+    padding: 5px;
 }
 
-.category .right {
+.subcategories .category .content .emoji {
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    position: relative;
+    background: white;
+    flex-shrink: 0;
+}
+
+.subcategories .category .content .emoji .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    line-height: 1em;
+    font-size: 15px;
+}
+
+
+
+.subcategories .category .content .title {
+    background: #fff;
+    padding: 10px 10px 10px 35px;
+    font-size: 14px;
+    text-align: left;
+    border-radius: 19px;
+    translate: -20px 0;
+    width: 100%;
+    mask: radial-gradient(21px at 5px 19px, #0000 98%, #000);
+}
+
+
+
+
+.category .actions {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.category .right .button, .category .right button {
-    display:none;
+.category.categoriesTitle .actions {
+    translate: -10px 0;
+
 }
 
-.drag-handle {}
-
-.drag-handle::after {
-    content: '⠿';
-    font-size: 25px;
-    color: #00000099;
+.index .category .actions {
+    display: none;
 }
 
 
-.circle{
+.pageActions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    margin-right: 10px;
+    gap: 10px;
+    z-index: 1;
+}
+
+
+.plantTop{
     position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ff730063;
+    top: 0;
+    right: 10px;
+    width: 165px;
+    transform-origin: top center;
+    animation: swing 5s infinite;
 }
 
-
-.circle2{
+.plantBottom{
     position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ffe60063;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+    height: 125px;
+    transform-origin: bottom right;
+    animation: swingX 5s 1s infinite;
+}
+
+.plantSide{
+    position: absolute;
+    width: 80px;
+    top: 6px;
+    height: calc(100% - 5px);
+    left: -50px;
+    z-index: 1;
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-1deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes swingX {
+    0% {
+        transform: rotateX(0deg);
+    }
+    50% {
+        transform: rotateX(5deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+.plantTop img, .plantSide img, .plantBottom img {
+    width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit:cover;
+    object-position: top;
+    filter: drop-shadow(0 4px 6px #0e163305) drop-shadow(0 2px 4px #0e163305) drop-shadow(1px 1px 1px #ddedfe);
+
+}
+
+.plantSide img{
+    height: 100%;
+    object-fit: cover;
+    object-position: right;
+}
+
+#cat5 {
+    z-index: 1;
 }

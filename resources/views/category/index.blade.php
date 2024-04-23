@@ -1,6 +1,6 @@
 @include('components.head')
+<div class="categoriesWrapper index">
 
-<div class="categories">
     @foreach ($categories as $category)
         @php
             $counter = 0;
@@ -8,7 +8,13 @@
         @include('components.category', ['category' => $category, 'counter' => $counter])
     @endforeach
 </div>
-<a class="button" href="{{ route('category.create') }}">+ Add new</a>
-<a class="button" href="{{ route('category.reorder') }}">Reorder</a>
-
+<div class="plantTop">
+    <img src="images/plantTop.png" alt="">
+</div>
+<div class="plantBottom">
+    <img src="images/plantBottom.png" alt="">
+</div>
+<div class="pageActions">
+    <a class="button" href="{{ route('category.reorder') }}">✏️</a>
+</div>
 @include('components.foot')
