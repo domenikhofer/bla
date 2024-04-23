@@ -3,7 +3,7 @@
         @if (count($category->children) > 0)
             {{ $category->name }}
         @else
-            <a href="{{ route('category.show', ['category' => $category->id]) }}">
+            <a class="link" href="{{ route('category.show', ['category' => $category->id]) }}">
                 <span class="emoji"><span class="icon">{{ $category->emoji }}</span></span>
                 <span class="title"><span class="titleContent">{{ $category->name }}</span></span>
             </a>
