@@ -10,9 +10,4 @@ class Entry extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
-    public function columns()
-    {
-        return $this->hasMany(ColumnEntry::class);
-    }
 }

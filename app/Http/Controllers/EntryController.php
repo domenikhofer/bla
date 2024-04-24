@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entry;
 use Illuminate\Http\Request;
 
 class EntryController extends Controller
@@ -19,7 +20,7 @@ class EntryController extends Controller
      */
     public function create()
     {
-        //
+        return view('entry.create');
     }
 
     /**
@@ -60,5 +61,28 @@ class EntryController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $query = strtolower($request->get('query'));
+        $matchedEntries = [];
+        $wildcardEntries = Entry::where('value', 'like', "%$query%")->get();
+        $entries = Entry::all();
+
+        foreach ($entries as $entry) {
+            $similarity = 0;
+            $value = strtolower($entry->value);
+            similar_text($query, $value, $similarity);
+
+            if ($similarity > 70) {
+                $matchedEntries[] = $entry;
+            }
+        }
+        $matchedEntriesCollection = collect($matchedEntries);
+        $allEntriesCollection = $matchedEntriesCollection->merge($wildcardEntries);
+        $entries = $allEntriesCollection->unique('id')->values()->all();
+
+        return response()->json($entries);
     }
 }
