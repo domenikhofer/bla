@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('parent_id', null)->get();
         return view('category.create', ['categories' => $categories]);
     }
 
@@ -39,8 +39,9 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->parent_id = $request->parent_id;
+        $category->emoji = $request->emoji;
         $category->save();
-        return redirect()->route('category.index');
+        return redirect()->route('category.reorder');
     }
 
     /**
@@ -56,7 +57,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::all();
+        $categories = Category::where('parent_id', null)->get();
         return view('category.edit', ['category' => $category, 'categories' => $categories]);
     }
 
@@ -67,8 +68,9 @@ class CategoryController extends Controller
     {
         $category->name = $request->name;
         $category->parent_id = $request->parent_id;
+        $category->emoji = $request->emoji;
         $category->save();
-        return redirect()->route('category.index');
+        return redirect()->route('category.reorder');
     }
 
     /**
@@ -77,6 +79,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('category.index');
+        return redirect()->route('category.reorder');
     }
 }

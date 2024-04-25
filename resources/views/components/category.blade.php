@@ -1,7 +1,7 @@
 <div id="cat{{ $category->id }}" class="category @if (count($category->children) > 0) categoriesTitle @endif">
     <div class="content">
-        @if (count($category->children) > 0)
-            {{ $category->name }}
+        @if (count($category->children) > 0 || $category->parent_id == null)
+            <h2>{{ $category->name }}</h2>
         @else
             <a class="link" href="{{ route('category.show', ['category' => $category->id]) }}">
                 <span class="emoji"><span class="icon">{{ $category->emoji }}</span></span>
@@ -11,14 +11,12 @@
     </div>
     <div class="actions">
         <a class="button" href="{{ route('category.edit', ['category' => $category->id]) }}">✏️</a>
-        <form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="post">
+        <form action="{{ route('category.destroy', ['category' => $category->id]) }}" id="form-delete-{{ $category->id }}" method="post">
             @csrf
             @method('DELETE')
-            <button type="submit">🗑️</button>
+            <button type="submit" class="delete-category-btn" data-category-id="{{ $category->id }}">🗑️</button>
         </form>
     </div>
-
-
 </div>
 
 @if (count($category->children) > 0)
