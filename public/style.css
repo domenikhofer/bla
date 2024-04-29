@@ -58,13 +58,26 @@ button,
     width: var(--elementHeight);
     height: var(--elementHeight);
 
-    & :active {
+    &:active {
         background-color: var(--lightBlue);
     }
 }
 
-.swal2-container button, .swal2-container .button {
-   width: auto;
+.swal2-container button,
+.swal2-container .button {
+    width: auto;
+}
+
+.swalFadeIn {
+    animation-name: fadeIn;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+}
+
+.swalFadeOut {
+    animation-name: fadeOut;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
 }
 
 label {
@@ -136,12 +149,12 @@ select {
     display: flex;
     justify-content: space-between;
 
-    & .actions{
+    & .actions {
         display: flex;
         gap: calc(var(--gap) / 2);
     }
 
-    &#cat5{
+    &#cat5 {
         z-index: 1;
     }
 }
@@ -157,7 +170,8 @@ select {
     display: none;
 }
 
-.pageActions, .formActions {
+.pageActions,
+.formActions {
     display: flex;
     gap: calc(var(--gap) / 2);
     justify-content: flex-end;
@@ -178,7 +192,7 @@ select {
     transition: all .5s ease-in-out;
     width: 100%;
 
-    & img{
+    & img {
         max-height: 100%;
         object-fit: cover;
         object-position: top;
@@ -204,10 +218,10 @@ select {
     width: 120px;
     z-index: 1;
 
-    &.clicked{
+    &.clicked {
         pointer-events: none;
 
-        & img{
+        & img {
             rotate: 50deg;
             translate: 0 15px;
         }
@@ -251,7 +265,7 @@ select {
     & .category .content {
         width: 100%;
 
-        & .link{
+        & .link {
             align-items: center;
             display: flex;
             filter: var(--drop-shadow);
@@ -304,30 +318,95 @@ select {
     position: relative;
 }
 
-@keyframes swing {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-
-    50% {
-        transform: rotate(-1deg);
-    }
+.entriesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
 }
 
-@keyframes swingX {
-    0% {
-        transform: rotateX(0deg);
+.entryWrapper {
+    background: var(--white);
+    border-radius: calc(var(--elementHeight) / 2);
+    filter: var(--drop-shadow);
+    padding: var(--gap);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--gap) / 4);
+
+    & .entry {
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            width: 100%;
+            left: 0;
+            bottom: calc(var(--gap) / -8);
+            background-color: var(--lightBlue);
+        }
+
+        &:nth-last-child(2):after {
+            display: none;
+        }
+
+        &.template {
+            display: none;
+        }
+
+        & .title {
+
+            &[contenteditable] {
+                outline: 0px solid transparent;
+            }
+        }
+
     }
 
-    100% {
-        transform: rotateX(0deg);
+    @keyframes swing {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(0deg);
+        }
+
+        50% {
+            transform: rotate(-1deg);
+        }
     }
 
-    50% {
-        transform: rotateX(3deg);
+    @keyframes swingX {
+        0% {
+            transform: rotateX(0deg);
+        }
+
+        100% {
+            transform: rotateX(0deg);
+        }
+
+        50% {
+            transform: rotateX(3deg);
+        }
     }
-}
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
