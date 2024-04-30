@@ -5,14 +5,25 @@ document.querySelector('.plantBottomWrapper')?.addEventListener('touchstart', fu
 
 
 document.addEventListener('keydown', function (event) {
-    if (!event.target.parentElement.classList.contains('entry')) {
-        return;
+    if (event.target.parentElement.classList.contains('entry')) {
+        entryTitleKeydown(event);
     }
+});
 
+document.addEventListener('click', function (event) {
+    this.querySelectorAll('.entry .link').forEach(function (link) {
+        link.classList.remove('active')
+    });
+    event.target.closest('.entry')?.querySelector('.link')?.classList.add('active');
+    if (event.target.parentElement.classList.contains('entry') && event.target.classList.contains('link')) {
+       window.open('https://www.google.com/search?q=' + event.target.parentElement.querySelector('.title').textContent.trim(), '_blank');
+    }
+});
+
+function entryTitleKeydown(event) {
 
     let entryTitle = event.target
     let entry = entryTitle.parentElement;
-    // save to db
 
     if (event.key === 'Enter') {
         event.preventDefault();
@@ -28,7 +39,7 @@ document.addEventListener('keydown', function (event) {
         setCursorToEndOfElement(previousEntry.querySelector('.title'))
         entry.remove();
     }
-});
+}
 
 document.querySelectorAll('.delete-category-btn').forEach(function (btn) {
     btn.addEventListener('click', function (event) {
