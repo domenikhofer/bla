@@ -12,6 +12,7 @@ Route::get('/', function () {
 Route::get('category/reorder', [CategoryController::class, 'reorder'])->name('category.reorder');
 Route::resource('category', CategoryController::class);
 
+Route::post('entry/store-media', [EntryController::class, 'storeMedia'])->name('entry.storeMedia');
 Route::resource('entry', EntryController::class);
 
 

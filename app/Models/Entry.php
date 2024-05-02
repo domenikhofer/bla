@@ -12,4 +12,12 @@ class Entry extends Model
     use HasFactory;
     use SortableTrait;
     use SoftDeletes;
+
+    protected $fillable = [
+        'value',
+        'value',
+        'category_id',
+        'image',
+        'url',
+    ];
 }

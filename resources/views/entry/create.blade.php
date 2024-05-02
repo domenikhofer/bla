@@ -1,39 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Entry Search</title>
-</head>
-<body>
-    <h1>Entry Search</h1>
-    <input type="text" id="entry-search" name="entry-search" placeholder="Search for entries..." />
-    <div id="results"></div>
+@include('components.head')
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const entrySearch = document.getElementById('entry-search');
-            const resultsDiv = document.getElementById('results');
+<form action="{{ route('entry.storeMedia') }}" method="post">
+    <h2>Add Entry</h2>
+    @csrf
+    <label>
+        <div class="label">
+            Name
+        </div>
+        <input type="search" class="searchMovieTV" placeholder="">
+    </label>
+    <input type="hidden" id="image" name="image">
+    <input type="hidden" id="url" name="url">
+    <input type="hidden" id="value" name="value">
+    <input type="hidden" id="category_id" name="category_id" value="5">
+            {{-- todo: add dynamic category value --}}
+    @error('name')
+        <div class="error">{{ $message }}</div>
+    @enderror
+    @error('url')
+    <div class="error">{{ $message }}</div>
+@enderror
+@error('image')
+<div class="error">{{ $message }}</div>
+@enderror
+@error('category_id')
+<div class="error">{{ $message }}</div>
+@enderror
+    <div class="imageEntryWrapper"></div>
+    <div class="formActions">
+        <button type="submit">✔️</button>
+        <a class="button" href="{{ route('category.reorder') }}">✖️</a>
+        {{-- todo: add correct back location --}}
 
-            entrySearch.addEventListener('keyup', function () {
-                const searchTerm = this.value;
-                if (searchTerm.length >= 3) {
-                    fetch('/better-list-app/public/api/entry/search?query=' + searchTerm)
-                        .then(response => response.json())
-                        .then(data => {
-                            let result = '';
-                            resultsDiv.innerHTML = '';
-                            if (data.length) {
-                                data.forEach(function (entry) {
-                                    result += `<div>${entry.value}</div>`;
-                                });
-                                resultsDiv.innerHTML = result;
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                } else {
-                    resultsDiv.innerHTML = '';
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+    </div>
+</form>
+@include('components.foot')

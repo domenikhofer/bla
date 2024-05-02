@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMediaEntryRequest;
 use App\Models\Entry;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class EntryController extends Controller
      */
     public function create()
     {
-        //
+        return view('entry.create');
     }
 
     /**
@@ -31,6 +32,15 @@ class EntryController extends Controller
         Entry::where('category_id', $request->category_id)->delete();
         Entry::whereDate( 'deleted_at', '<=', now()->subDays(5))->forceDelete();
         Entry::insert($request->entries);
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     */
+    public function storeMedia(StoreMediaEntryRequest $request)
+    {
+        Entry::create($request->validated());
+        return redirect()->route('category.index');
     }
 
     /**
