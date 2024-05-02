@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\CategoryType;
 use App\Models\Entry;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,18 +23,25 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        CategoryType::factory()->createMany([
+            ['name' => 'Movie/TV Show'],
+            ['name' => 'Game'],
+            ['name' => 'Book'],
+            ['name' => 'Location'],
+        ]);
+
         Category::factory()->createMany([
             ['name' => 'Activities', 'emoji' => null, 'parent_id' => null],
-            ['name' => 'Summer', 'emoji' => '☀️', 'parent_id' => 1],
-            ['name' => 'Winter', 'emoji' => '❄️', 'parent_id' => 1],
+            ['name' => 'Summer', 'emoji' => '☀️', 'parent_id' => 1, 'category_type_id' => 4],
+            ['name' => 'Winter', 'emoji' => '❄️', 'parent_id' => 1, 'category_type_id' => 4],
             ['name' => 'Media', 'emoji' => null, 'parent_id' => null],
-            ['name' => 'Movies', 'emoji' => '🎬', 'parent_id' => 4],
-            ['name' => 'Series', 'emoji' => '📺', 'parent_id' => 4],
-            ['name' => 'Games', 'emoji' => '🎮', 'parent_id' => 4],
-            ['name' => 'Books', 'emoji' => '📘', 'parent_id' => 4],
+            ['name' => 'Movies', 'emoji' => '🎬', 'parent_id' => 4, 'category_type_id' => 1],
+            ['name' => 'Series', 'emoji' => '📺', 'parent_id' => 4, 'category_type_id' => 1 ],
+            ['name' => 'Games', 'emoji' => '🎮', 'parent_id' => 4, 'category_type_id' => 2],
+            ['name' => 'Books', 'emoji' => '📘', 'parent_id' => 4, 'category_type_id' => 3],
             ['name' => 'Food', 'emoji' => null, 'parent_id' => null],
-            ['name' => 'Restaurants ZH', 'emoji' => '🍽️', 'parent_id' => 9],
-            ['name' => 'Restaurants Elsewhere', 'emoji' => '🍜', 'parent_id' => 9],
+            ['name' => 'Restaurants ZH', 'emoji' => '🍽️', 'parent_id' => 9, 'category_type_id' => 4],
+            ['name' => 'Restaurants Elsewhere', 'emoji' => '🍜', 'parent_id' => 9, 'category_type_id' => 4],
             ['name' => 'Recipes', 'emoji' => '📄', 'parent_id' => 9],
             ['name' => 'Cooking / Baking Ideas', 'emoji' => '🥐', 'parent_id' => 9],
             ['name' => 'Projects', 'emoji' => null, 'parent_id' => null],

@@ -20,7 +20,7 @@ class EntryController extends Controller
      */
     public function create()
     {
-        return view('entry.create');
+        //
     }
 
     /**
@@ -28,7 +28,9 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Entry::where('category_id', $request->category_id)->delete();
+        Entry::whereDate( 'deleted_at', '<=', now()->subDays(5))->forceDelete();
+        Entry::insert($request->entries);
     }
 
     /**
@@ -67,8 +69,8 @@ class EntryController extends Controller
     {
         $query = strtolower($request->get('query'));
         $matchedEntries = [];
-        $wildcardEntries = Entry::where('value', 'like', "%$query%")->get();
-        $entries = Entry::all();
+        $wildcardEntries = Entry::where('category_id', $request->get('category_id'))->where('value', 'like', "%$query%")->get();
+        $entries = Entry::where('category_id', $request->get('category_id'))->get();
 
         foreach ($entries as $entry) {
             $similarity = 0;

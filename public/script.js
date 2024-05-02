@@ -10,14 +10,89 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
+document.addEventListener('keyup', function (event) {
+
+    if (event.target.parentElement.classList.contains('entry')) {
+        const searchTerm = event.target.textContent.trim();
+        let resultsDiv = event.target.parentElement.querySelector('.similar');
+        let resultsDivContainer = resultsDiv.querySelector('.results');
+        if (searchTerm.length >= 3) {
+            fetch(`/better-list-app/public/api/entry/search?query=${searchTerm}&category_id=${document.querySelector('.entriesWrapper').dataset.category}`)
+                .then(response => response.json())
+                .then(data => {
+                    let result = '';
+                    resultsDivContainer.innerHTML = '';
+                    if (data.length) {
+                        resultsDiv.classList.add('active');
+                        data.forEach(function (entry) {
+                            result += `<div>${entry.value}</div>`;
+                        });
+                        resultsDivContainer.innerHTML = result;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            resultsDiv.classList.remove('active');
+
+            //resultsDiv.innerHTML = '';
+        }
+    }
+});
+
 document.addEventListener('click', function (event) {
-    this.querySelectorAll('.entry .link').forEach(function (link) {
+    this.querySelectorAll('.entry .actions').forEach(function (link) {
         link.classList.remove('active')
     });
-    event.target.closest('.entry')?.querySelector('.link')?.classList.add('active');
+    document.querySelectorAll('.entry .similar').forEach(function (similar) {
+        similar.classList.remove('active')
+    })
+    event.target.closest('.entry')?.querySelector('.actions')?.classList.add('active');
     if (event.target.parentElement.classList.contains('entry') && event.target.classList.contains('link')) {
-       window.open('https://www.google.com/search?q=' + event.target.parentElement.querySelector('.title').textContent.trim(), '_blank');
+        window.open('https://www.google.com/search?q=' + event.target.parentElement.querySelector('.title').textContent.trim(), '_blank');
     }
+});
+
+document.querySelector('.saveEntries')?.addEventListener('click', function (event) {
+    let entries = [];
+    document.querySelectorAll('.entry .title').forEach(function (title) {
+        if (title.textContent.trim() !== ''){
+        entries.push({
+            value: title.textContent.trim(),
+            category_id: event.target.dataset.category
+        });
+        }
+    })
+    fetch('/better-list-app/public/api/entry', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            entries,
+            category_id: event.target.dataset.category
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            Swal.fire({
+                title: 'Entries saved!',
+                icon: 'success',
+                showClass: {
+                    popup: `
+                      swalFadeIn
+                    `
+                },
+                hideClass: {
+                    popup: `
+                      swalFadeOut
+                    `
+                }
+            });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 });
 
 function entryTitleKeydown(event) {
@@ -26,6 +101,9 @@ function entryTitleKeydown(event) {
     let entry = entryTitle.parentElement;
 
     if (event.key === 'Enter') {
+        document.querySelectorAll('.entry .similar').forEach(function (similar) {
+            similar.classList.remove('active')
+        })
         event.preventDefault();
         let entryElement = document.querySelector('.entry.template').cloneNode(true);
         entryElement.classList.remove('template');

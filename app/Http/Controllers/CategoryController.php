@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\CategoryType;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -28,19 +32,16 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::where('parent_id', null)->get();
-        return view('category.create', ['categories' => $categories]);
+        $categoryTypes = CategoryType::all();
+        return view('category.create', ['categories' => $categories, 'categoryTypes' => $categoryTypes]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->parent_id = $request->parent_id;
-        $category->emoji = $request->emoji;
-        $category->save();
+        Category::create($request->validated());
         return redirect()->route('category.reorder');
     }
 
@@ -58,18 +59,16 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $categories = Category::where('parent_id', null)->get();
-        return view('category.edit', ['category' => $category, 'categories' => $categories]);
+        $categoryTypes = CategoryType::all();
+        return view('category.edit', ['category' => $category, 'categories' => $categories, 'categoryTypes' => $categoryTypes]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category->name = $request->name;
-        $category->parent_id = $request->parent_id;
-        $category->emoji = $request->emoji;
-        $category->save();
+       $category->update($request->validated());
         return redirect()->route('category.reorder');
     }
 

@@ -28,6 +28,19 @@
 
     </select>
 </label>
+<label>
+    <div class="label">
+    Category Type
+</div>
+<select name="category_type_id">
+    <option value="">No Type</option>
+    @foreach ($categoryTypes as $c)
+        <option value="{{ $c->id }}">{{ $c->name }}
+        </option>
+    @endforeach
+
+</select>
+</label>
 <div class="formActions">
     <button type="submit">✔️</button>
     <a class="button" href="{{ route('category.reorder') }}">✖️</a>

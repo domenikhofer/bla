@@ -14,6 +14,8 @@ class Category extends Model implements Sortable
     use SortableTrait;
     use SoftDeletes;
 
+    protected $fillable = ['name', 'parent_id', 'category_type_id', 'emoji'];
+
 
     public function entries()
     {
@@ -22,7 +24,7 @@ class Category extends Model implements Sortable
 
     public function children()
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id')->where('deleted_at', null);
     }
 
     public function allChildren()

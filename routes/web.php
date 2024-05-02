@@ -12,7 +12,6 @@ Route::get('/', function () {
 Route::get('category/reorder', [CategoryController::class, 'reorder'])->name('category.reorder');
 Route::resource('category', CategoryController::class);
 
-Route::get('/entry/search', [EntryController::class, 'search'])->name('entry.search');
 Route::resource('entry', EntryController::class);
 
 

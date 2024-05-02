@@ -1,33 +1,54 @@
-{{--
-    Todo:
-    - Save to DB
-    - Unique entries?
-    - entry preview?
-    - styling
---}}
-
 @include('components.head')
-<div class="entriesWrapper">
+<div class="entriesWrapper" data-category="{{ $category->id }}">
+    <div class="emoji">{{ $category->emoji }}</div>
     <div class="header">
-        <a href="{{ route('category.index') }}">⬅️</a>
-        <h2>{{ $category->emoji }}{{ $category->name }}</h2>
+        <h1>{{ $category->name }}</h1>
     </div>
 
     <div class="entryWrapper">
 
-        @foreach ($category->entries as $entry)
+        @forelse ($category->entries as $entry)
             <div class="entry">
                 <div class="title" contenteditable="true" spellcheck="false">
                     {{ $entry->value }}
                 </div>
-                <a class="link" target="_blank">🔍</a>
+                <div class="actions">
+                    {{-- <a class="location">📍</a> --}}
+                    <a class="link" target="_blank">🔍</a>
+                </div>
+                <div class="similar">
+                    <div class="label">Existing Entries</div>
+                    <div class="results"></div>
+                </div>
             </div>
-        @endforeach
+        @empty
+            <div class="entry">
+                <div class="title" contenteditable="true" spellcheck="false">First Entry</div>
+                <div class="actions">
+                    <a class="link" target="_blank">🔍</a>
+                </div>
+                <div class="similar">
+                    <div class="label">Existing Entries</div>
+                    <div class="results"></div>
+                </div>
+            </div>
+        @endforelse
         <div class="entry template">
             <div class="title" contenteditable="true" spellcheck="false"></div>
-            <a class="link" target="_blank">🔍</a>
+            <div class="actions">
+                <a class="link" target="_blank">🔍</a>
+            </div>
+            <div class="similar">
+                <div class="label">Existing Entries</div>
+                <div class="results"></div>
+            </div>
         </div>
     </div>
 </div>
+<div class="pageActions fixed">
+    <a class="button" href="{{ route('category.index') }}">⬅️</a>
+    <div class="button saveEntries" data-category="{{ $category->id }}">💾</div>
+</div>
+
 
 @include('components.foot')
