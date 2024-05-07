@@ -175,10 +175,6 @@ select {
     flex-grow: 1;
 }
 
-.index .category .actions {
-    display: none;
-}
-
 .pageActions,
 .formActions {
     display: flex;
