@@ -14,8 +14,12 @@ return new class extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
+            $table->string('value');
+            $table->string('image')->nullable();
+            $table->string('url')->nullable();
             $table->foreignIdFor(Category::class)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
