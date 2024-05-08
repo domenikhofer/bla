@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMediaEntryRequest extends FormRequest
+class StoreEntriesRequest extends FormRequest
 {
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -16,10 +15,12 @@ class StoreMediaEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'string|nullable',
-            'url' => 'required|url',
-            'value' => 'required|string|unique:entries,value',
             'category_id' => 'required|exists:categories,id',
+            'entries' => 'required|array',
+            'entries.*.value' => 'string|nullable',
+            'entries.*.url' => 'string|nullable',
+            'entries.*.image' => 'string|nullable',
+            'entries.*.category_id' => 'required|exists:categories,id',
         ];
     }
 }

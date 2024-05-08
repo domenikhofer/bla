@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEntriesRequest;
 use App\Http\Requests\StoreMediaEntryRequest;
 use App\Http\Resources\EntryResource;
 use App\Models\Entry;
@@ -18,21 +19,15 @@ class EntryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('entry.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEntriesRequest $request)
     {
-        Entry::where('category_id', $request->category_id)->delete();
+        $entries = $request->validated();
+        Entry::where('category_id', $entries['category_id'])->delete();
         Entry::whereDate( 'deleted_at', '<=', now()->subDays(5))->forceDelete();
-        Entry::insert($request->entries);
+        Entry::insert($entries['entries']);
+        return response()->noContent();
     }
 
      /**
@@ -40,22 +35,14 @@ class EntryController extends Controller
      */
     public function storeMedia(StoreMediaEntryRequest $request)
     {
-        Entry::create($request->validated());
-        return redirect()->route('category.index');
+        $entry = Entry::create($request->validated());
+        return new EntryResource($entry);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
     {
         //
     }

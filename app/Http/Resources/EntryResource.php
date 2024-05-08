@@ -19,6 +19,7 @@ class EntryResource extends JsonResource
             'value' => $this->value,
             'url' => $this->url,
             'image' => $this->image,
+            'category_id' => $this->category_id,
         ];
     }
 }
