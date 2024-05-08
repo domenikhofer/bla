@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMediaEntryRequest;
+use App\Http\Resources\EntryResource;
 use App\Models\Entry;
 use Illuminate\Http\Request;
 
@@ -95,6 +96,6 @@ class EntryController extends Controller
         $allEntriesCollection = $matchedEntriesCollection->merge($wildcardEntries);
         $entries = $allEntriesCollection->unique('id')->values()->all();
 
-        return response()->json($entries);
+        return EntryResource::collection($entries);
     }
 }
