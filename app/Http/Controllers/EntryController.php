@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEntriesRequest;
 use App\Http\Requests\StoreMediaEntryRequest;
+use App\Http\Requests\UpdateEntryRequest;
 use App\Http\Resources\EntryResource;
+use App\Http\Resources\EntryWithCategoryResource;
 use App\Models\Entry;
 use Illuminate\Http\Request;
 
@@ -42,25 +44,27 @@ class EntryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Entry $entry)
     {
-        //
+        return new EntryWithCategoryResource($entry);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateEntryRequest $request, Entry $entry)
     {
-        //
+        $entry->update($request->validated());
+        return new EntryResource($entry);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Entry $entry)
     {
-        //
+        $entry->delete();
+        return response()->noContent();
     }
 
     public function search(Request $request)

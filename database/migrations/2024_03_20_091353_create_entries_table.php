@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('value')->nullable();
             $table->string('image')->nullable();
             $table->string('url')->nullable();
+            $table->boolean('done')->default(false);
             $table->foreignIdFor(Category::class)->nullable();
             $table->timestamps();
             $table->softDeletes();

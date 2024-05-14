@@ -98,7 +98,11 @@ class DatabaseSeeder extends Seeder
             ['value' => 'Gampel Tickets', 'category_id' => 2],
             ['value' => 'Raiffeisen wechseln', 'category_id' => 2],
             ['value' => 'Checkup / Blutbild', 'category_id' => 2],
-            ['value' => 'Badi Abo ZH', 'category_id' => 2]
+            ['value' => 'Badi Abo ZH', 'category_id' => 2],
+            ['value' => 'The Croods', 'category_id' => 5, 'image' => '/hkjPDCe6qmPcrkinqTgv0ygcrHg.jpg', 'url' => 'https://www.themoviedb.org/movie/49519'],
+            ['value' => 'Saving Mr. Banks', 'category_id' => 5, 'image' => '/4RkcUe5PKnYvrCwMjk8giUAoID7.jpg', 'url' => 'https://www.themoviedb.org/movie/140823'],
+            ['value' => 'Hairspray', 'category_id' => 5, 'image' => '/fgMka3HtFvI5OgW1eYdR9XpySxH.jpg', 'url' => 'https://www.themoviedb.org/movie/2976'],
+
         ]);
 
     }

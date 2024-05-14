@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryResourceWithEntries;
 use App\Http\Resources\CategoryTypeResource;
+use App\Http\Resources\CategoryWithEntriesResource;
 use App\Models\Category;
 use App\Models\CategoryType;
 use Illuminate\Contracts\Cache\Store;
@@ -44,7 +45,7 @@ class CategoryController extends Controller
     public function show(Category $category, Request $request)
     {
         if($request->has('withEntries')) {
-            return new CategoryResourceWithEntries($category);
+            return new CategoryWithEntriesResource($category);
         }
         return new CategoryResource($category);
     }
